@@ -34,7 +34,7 @@ class WebController extends Controller
         ->select('months.id as id_month','months.name as month_name','payments.amount','students.name','students.last_name','students.id as id_student')
         ->get();
         
-        return view('web.detail',['months' => $months]);
+        return view('web.detail',['months' => $months, 'id_student' => $id]);
     }
 
 }

@@ -2,7 +2,8 @@
 @section('content')
     <form name="formulario" id="formulario" method="POST" action="{{route('month.payment')}}" enctype="multipart/form-data">
         <input type="hidden" id="id_mes" name="id_mes" value="">
-        <input type="hidden" id="id_student" name="id_student" value="{{ $months[0]->id_student }}">
+        <input type="hidden" id="id_student" name="id_student" value="{{ $id_student }}">
+        
         @csrf
         <div class="container-fluid">
             @if (session('status') == 200)
