@@ -37,4 +37,8 @@ class WebController extends Controller
         return view('web.detail',['months' => $months, 'id_student' => $id]);
     }
 
+    public function resumen(){
+        return view('web.resumen');
+    }
+
 }
