@@ -20,6 +20,7 @@ class PaymentController extends Controller
             $payment->student_id = $request->id_student;
             $payment->month_id = $request->id_mes;
             $payment->amount = $request->total_pagar;
+            $payment->year = date('Y');
             $payment->save();
         }
         else{

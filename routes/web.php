@@ -15,8 +15,9 @@ use App\Http\Controllers\PaymentController;
 |
 */
 
-Route::get('/', [WebController::class, 'index']);
+Route::get('/', [WebController::class, 'index'])->name('index');
 Route::get('/about', [WebController::class, 'about']);
-Route::get('/resumen', [WebController::class, 'resumen']);
+Route::get('/resumen', [WebController::class, 'resumen'])->name('resumen');
 Route::get('/detail/{id}',[WebController::class, 'detail'])->name('student.detail');
 Route::post('/pagar',[PaymentController::class,'store'])->name('month.payment');
+

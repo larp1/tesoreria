@@ -1,13 +1,19 @@
 @extends('web.master')
 @section('content') 
 
+@php 
+    $valor_cuota = [
+        2023 => 5000, 
+        2024 => 6000
+    ];
+@endphp
 
 <form name="formulario" id="formulario" method="POST" action="" enctype="multipart/form-data">
     @csrf
-    <div class="container-fluid mb-3">
+    <div class="container mb-3">
         <h2>Lista de Alumnos</h2>
-        <table class="table table-bordered table-striped table-hover table-sm" id="users-table">
-            <caption>Lista de estudiantes del curso 3° Básico Saint Mary</caption>
+        <table class="table table-bordered table-striped table-hover" id="users-table">
+            <caption>Lista de estudiantes del curso 4° Básico Saint Mary</caption>
             <thead>
                 <tr>
                     <th>ID</th>
@@ -30,7 +36,7 @@
                     if ($student->amount > 0){
                         $total = $student->amount;
                     }                    
-                    $saldo = 50000 - $total;
+                    $saldo = $valor_cuota[date('Y')]*10 - $total;
 
                     $totales += $total;
                     $saldos += $saldo;
@@ -38,8 +44,8 @@
                 <tr>
                     <td>{{ $indice }}</td>
                     <td class="text-capitalize">{{ $student->name.' '.$student->last_name }}</td>
-                    <td>${{ number_format($total,0,'','.') }} ({{ $total/5000 }} cuotas)</td>
-                    <td>${{ number_format($saldo,0,'','.') }} ({{ $saldo/5000 }} cuotas)</td>
+                    <td>${{ number_format($total,0,'','.') }} ({{ $total/$valor_cuota[date('Y')] }} cuotas)</td>
+                    <td>${{ number_format($saldo,0,'','.') }} ({{ $saldo/$valor_cuota[date('Y')] }} cuotas)</td>
                     <td>{{ $saldo > 0 ? 'Debe':'Pagado'}}</td>
                     <td class="text-center"><button type="button" class="btn btn-primary" data-user-id="{{ $student->id }}" data-route="{{ route('student.detail', ['id' => $student->id]) }}"><i class="fa-solid fa-eye pe-2"></i>Ver</button></td>
                 </tr>

@@ -18,13 +18,12 @@
 <body>
     @include('web.partials.nav-header-main')
     
-    <main role="main" class="col-12 pt-3 px-4">
+    <main role="main" class="col-12 px-4">
         <div class="p-0">
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb p-0">
-                    
+                <ol class="breadcrumb p-0">                   
                   
-              </ol>  
+                </ol>  
             </nav>
         </div>    
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">

@@ -1,11 +1,19 @@
 @extends('web.master')
+
+@php 
+    $valor_cuota = [
+        2023 => 5000, 
+        2024 => 6000
+    ];
+@endphp
+
 @section('content')
     <form name="formulario" id="formulario" method="POST" action="{{route('month.payment')}}" enctype="multipart/form-data">
         <input type="hidden" id="id_mes" name="id_mes" value="">
         <input type="hidden" id="id_student" name="id_student" value="{{ $id_student }}">
         
         @csrf
-        <div class="container-fluid">
+        <div class="container">
             @if (session('status') == 200)
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     El pago se registró correctamente
@@ -26,7 +34,7 @@
 
                             <div class="mb-3">
                                 <label for="total_pagar" class="form-label"><b>Total a pagar:</b></label>
-                                <input type="text" class="form-control" id="total_pagar" name="total_pagar" aria-describedby="pagar" min="1" max="5000" placeholder="Ingresa total a pagar">
+                                <input type="text" class="form-control" id="total_pagar" name="total_pagar" aria-describedby="pagar" min="1" max="{{$valor_cuota[date('Y')]}}" placeholder="Ingresa total a pagar">
                                 <div id="pagadoHelp" class="form-text">Ingresa el monto a pagar, debe ser menor o igual al saldo</div>
                             </div>
                         </div>
@@ -37,9 +45,8 @@
                     </div>
                 </div>
             </div>
-
-            <h2 class="text-capitalize">Detalle de pagos {{ $months[0]->name . ' ' . $months[0]->last_name }} </h2>
-            <table class="table table-bordered table-striped table-hover table-sm" id="users-table">
+            <h2 class="mt-0">Detalle de pagos {{ $months[0]->name . ' ' . $months[0]->last_name. ': '}} <span class="text-capitalize">{{$student_name }}</span></h2>
+            <table class="table table-bordered table-striped table-hover table-lg" id="users-table">
                 {{-- <caption>Detalle de pagos anuales de <span
                         class="text-capitalize">{{ $months[0]->name . ' ' . $months[0]->last_name }}</span></caption> --}}
                 <thead>
@@ -61,7 +68,7 @@
                     @foreach ($months as $month)
                         @php
                             $totales += $month->amount;
-                            $saldo = 5000 - $month->amount;
+                            $saldo = $valor_cuota[date('Y')] - $month->amount;
                             $saldos += $saldo;
                         @endphp
                         <tr>
@@ -85,7 +92,7 @@
                     @endforeach
                 </tbody>
                 <tfoot>
-                    <tr class="table-secondary">
+                    <tr class="table-primary">
                         <th colspan="2" class="text-end">TOTALES:</th>
                         <th>${{ number_format($totales, 0, '', '.') }}</th>
                         <th>${{ number_format($saldos, 0, '', '.') }}</th>
@@ -94,11 +101,11 @@
                 </tfoot>
             </table>
 
-            <div class="alert alert-primary mt-3" role="alert">
+            <div class="alert alert-success mt-3 p-3" role="alert">
                 <i class="far fa-address-card"></i>
                 <b>Datos para tranferencia:</b>
-                <p class="ps-4">
-                    <b>Rut:</b> 15.051.675.7
+                <p class="ps-4 mb-0">
+                    <b>Rut:</b> 15.051.675-7
                     <br><b>Nombre:</b> Andrea Vilches Estay
                     <br><b>Email:</b> andrea.vilches.estay@gmail.com
                     <br><b>Cuenta Vista:</b> 7000778537
@@ -108,7 +115,7 @@
 
             <div class="form-group row justify-content-end">
                 <div class="col-lg-3 mb-3">
-                    <a href="{{ url()->previous() }}" class="btn btn-secondary w-100">
+                    <a href="{{ route('index') }}" class="btn btn-secondary w-100">
                         <i class="fa-solid fa-chevron-left pe-2"></i>
                         Volver
                     </a>
@@ -123,7 +130,7 @@
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
                     },
-                    dom: 'f',
+                    dom: '',
                     pageLength: 50
                 });
             });
